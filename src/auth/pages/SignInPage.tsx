@@ -1,19 +1,10 @@
-import { FlexCenter, HeadingPrimary, Input, PrimaryButton } from 'styled';
+import { FlexCenter, HeadingPrimary, Input, PrimaryButton, Card } from 'styled';
 import styled from 'styled-components';
-import { Card, Flex } from 'rebass/styled-components';
+import { Flex } from 'rebass/styled-components';
 import { useForm, Controller } from 'react-hook-form';
 
 const LoginContainer = styled(FlexCenter)`
   background-color: ${(props) => props.theme.colors.primaryLight};
-`;
-
-const LoginCard = styled(Card)`
-  display: flex;
-  flex-direction: column;
-  min-width: 50rem;
-  height: 50rem;
-  background-color: ${(props) => props.theme.colors.secondary};
-  box-shadow: ${(props) => props.theme.boxShadow};
 `;
 
 const LoginForm = styled(Flex)`
@@ -37,7 +28,7 @@ export const SignInPage = () => {
 
   return (
     <LoginContainer>
-      <LoginCard>
+      <Card>
         <HeadingPrimary>Sign In</HeadingPrimary>
         <LoginForm as="form" onSubmit={handleSubmit(onSubmit)}>
           <Controller
@@ -54,7 +45,7 @@ export const SignInPage = () => {
           />
           <PrimaryButton type="submit">Sign in</PrimaryButton>
         </LoginForm>
-      </LoginCard>
+      </Card>
     </LoginContainer>
   );
 };
