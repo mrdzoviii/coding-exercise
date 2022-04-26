@@ -18,8 +18,10 @@ export const theme: DefaultTheme = {
   paddingMedium: '1.6rem',
   paddingLarge: '2.4rem',
   paddingExtraLarge: '3.2rem',
+  boxShadow: '0 0.4rem 0.8rem 0 rgba(0, 0, 0, 0.2)',
   colors: {
     primary: '#fce094',
+    primaryLight: '#fff8e5',
     secondary: '#fff',
     text: '#686b6b',
     textSecondary: '#dedfdf'

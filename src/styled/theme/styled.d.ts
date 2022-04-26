@@ -19,8 +19,10 @@ declare module 'styled-components' {
     paddingLarge: string;
     paddingExtraLarge: string;
     borderRadius: string;
+    boxShadow: string;
     colors: {
       primary: string;
+      primaryLight: string;
       secondary: string;
       text: string;
       textSecondary: string;

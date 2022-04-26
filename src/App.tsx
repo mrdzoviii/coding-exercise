@@ -1,7 +1,19 @@
-import { useRootStateSelector } from './store';
+import { Route, Routes } from 'react-router';
+import { RequireAuth, SignInPage } from './auth';
 
 function App() {
-  const isAuthorized = useRootStateSelector((state) => state.auth.isAuthorized);
-  return <div>TEST {`${isAuthorized}`}</div>;
+  return (
+    <Routes>
+      <Route
+        path="/"
+        element={
+          <RequireAuth>
+            <div>Home</div>
+          </RequireAuth>
+        }
+      />
+      <Route path="/login" element={<SignInPage />} />
+    </Routes>
+  );
 }
 export default App;
