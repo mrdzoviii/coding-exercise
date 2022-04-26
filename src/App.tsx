@@ -1,4 +1,7 @@
+import { useAppSelector } from './store';
+
 function App() {
-  return <div>TEST</div>;
+  const isAuthorized = useAppSelector((state) => state.auth.isAuthorized);
+  return <div>TEST {`${isAuthorized}`}</div>;
 }
 export default App;
