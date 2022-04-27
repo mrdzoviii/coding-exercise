@@ -1,8 +1,8 @@
 import { Flex, HeadingPrimary, Input, PrimaryButton, Card } from 'styled';
 import { useForm, Controller } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router';
-import { useAppDispatch, useSetUser } from '../../store';
 import { PathRoutes } from '../../config';
+import { useLogInWithEmailAndPassword, useLogInWithGoogle } from '../hooks';
 
 export interface ILogInForm {
   email: string;
@@ -19,21 +19,18 @@ export const LoginPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const locationState = location as unknown as ILocationState;
+  const { login } = useLogInWithEmailAndPassword();
+  const { loginWithGoogle } = useLogInWithGoogle();
 
   const from = PathRoutes.ROOT || locationState?.from?.pathname;
 
   const { control, handleSubmit } = useForm<ILogInForm>();
 
-  const dispatch = useAppDispatch();
-  const dispatchSetUser = useSetUser(dispatch);
-
-  const onSubmit = (data: ILogInForm) => {
-    setTimeout(() => {
-      if (data.email && data.password) {
-        dispatchSetUser({ fullName: data.email, username: data.email });
-        navigate(from, { replace: true });
-      }
-    }, 2000);
+  const onSubmit = async (data: ILogInForm) => {
+    if (data.email && data.password) {
+      await login(data.email, data.password);
+      navigate(from, { replace: true });
+    }
   };
 
   return (
@@ -63,6 +60,7 @@ export const LoginPage = () => {
           />
           <PrimaryButton type="submit">Sign in</PrimaryButton>
         </Flex>
+        <PrimaryButton onClick={loginWithGoogle}>Sign in with Google</PrimaryButton>
       </Card>
     </Flex>
   );
