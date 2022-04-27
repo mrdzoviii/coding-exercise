@@ -5,21 +5,28 @@ declare module 'styled-components' {
     fonts: {
       roboto: string;
     };
-    fontSize: string;
-    fontSizeSmall: string;
-    fontSizeMedium: string;
-    fontSizeLarge: string;
-    fontSizeExtraLarge: string;
+    fontSize: {
+      normal: string;
+      small: string;
+      medium: string;
+      large: string;
+      extraLarge: string;
+    };
     fontWeight: string;
     fontWeightBold: string;
     borderWidth: string;
-    padding: string;
-    paddingSmall: string;
-    paddingMedium: string;
-    paddingLarge: string;
-    paddingExtraLarge: string;
+    spacing: {
+      noSpacing: string;
+      small: string;
+      normal: string;
+      medium: string;
+      large: string;
+      extraLarge: string;
+    };
     borderRadius: string;
-    boxShadow: string;
+    shadow: {
+      card: string;
+    };
     colors: {
       primary: string;
       primaryLight: string;

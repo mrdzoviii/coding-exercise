@@ -1,18 +1,19 @@
 import { Route, Routes } from 'react-router';
-import { RequireAuth, SignInPage } from './auth';
+import { RequireAuth, LoginPage } from './auth';
+import { PathRoutes } from './config';
 
 function App() {
   return (
     <Routes>
       <Route
-        path="/"
+        path={PathRoutes.ROOT}
         element={
           <RequireAuth>
             <div>Home</div>
           </RequireAuth>
         }
       />
-      <Route path="/login" element={<SignInPage />} />
+      <Route path={PathRoutes.LOGIN} element={<LoginPage />} />
     </Routes>
   );
 }
