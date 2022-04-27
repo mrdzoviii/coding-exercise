@@ -1,6 +1,6 @@
-import { Flex, HeadingPrimary, Input, PrimaryButton, Card } from 'styled';
 import { useForm, Controller } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router';
+import { Flex, HeadingPrimary, Input, PrimaryButton, Card } from '../../styled';
 import { useRegister } from '../hooks';
 import { PathRoutes } from '../../config';
 

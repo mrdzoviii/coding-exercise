@@ -1,6 +1,6 @@
 import { useForm, Controller } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router';
-import { Flex, HeadingPrimary, Input, PrimaryButton, SecondaryButton, Card } from 'styled';
+import { Flex, HeadingPrimary, Input, PrimaryButton, SecondaryButton, Card } from '../../styled';
 import { PathRoutes } from '../../config';
 import { useLogInWithEmailAndPassword, useLogInWithGoogle } from '../hooks';
 
