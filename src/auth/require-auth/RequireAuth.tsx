@@ -1,16 +1,15 @@
 import { Navigate, useLocation } from 'react-router';
 import { FC } from 'react';
-import { useRootStateSelector } from '../../store';
+import { useAuthContext } from '../context/AuthContextProvider';
 
 export interface RequireAuthProps {
   children: JSX.Element;
 }
 
 export const RequireAuth: FC<RequireAuthProps> = ({ children }) => {
-  const isAuthorized = useRootStateSelector((state) => state.auth.isAuthorized);
+  const { isAuthorized, loading } = useAuthContext();
   const location = useLocation();
-
-  if (!isAuthorized) {
+  if (!isAuthorized && !loading) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 

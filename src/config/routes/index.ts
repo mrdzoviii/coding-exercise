@@ -2,5 +2,7 @@ export enum PathRoutes {
   ROOT = '/',
   LOGIN = '/login',
   DASHBOARD = '/dashboard',
-  SETTINGS = '/settings'
+  SETTINGS = '/settings',
+  REGISTER = '/register',
+  NOT_FOUND = '/not-found'
 }

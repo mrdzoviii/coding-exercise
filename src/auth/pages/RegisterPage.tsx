@@ -1,41 +1,22 @@
 import { Flex, HeadingPrimary, Input, PrimaryButton, Card } from 'styled';
 import { useForm, Controller } from 'react-hook-form';
-import { useLocation, useNavigate } from 'react-router';
-import { PathRoutes } from '../../config';
-import { useLogInWithEmailAndPassword, useLogInWithGoogle } from '../hooks';
+import { useRegister } from '../hooks';
 
-export interface ILogInForm {
+export interface IRegisterForm {
+  name: string;
   email: string;
   password: string;
 }
 
-interface ILocationState {
-  from: {
-    pathname: string;
-  };
-}
+export const RegisterPage = () => {
+  const { register } = useRegister();
 
-export const LoginPage = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const locationState = location as unknown as ILocationState;
-  const { login } = useLogInWithEmailAndPassword();
-  const { loginWithGoogle } = useLogInWithGoogle();
+  const { control, handleSubmit } = useForm<IRegisterForm>();
 
-  const from = PathRoutes.ROOT || locationState?.from?.pathname;
-
-  const { control, handleSubmit } = useForm<ILogInForm>();
-
-  const onSubmit = async (data: ILogInForm) => {
-    if (data.email && data.password) {
-      await login(data.email, data.password);
-      navigate(from, { replace: true });
+  const onSubmit = async (data: IRegisterForm) => {
+    if (data.email && data.password && data.name) {
+      await register(data.name, data.email, data.password);
     }
-  };
-
-  const onGoogleLogin = async () => {
-    await loginWithGoogle();
-    navigate(from, { replace: true });
   };
 
   return (
@@ -52,6 +33,12 @@ export const LoginPage = () => {
           onSubmit={handleSubmit(onSubmit)}
         >
           <Controller
+            render={({ field }) => <Input {...field} label="Name" />}
+            name="name"
+            control={control}
+            defaultValue=""
+          />
+          <Controller
             render={({ field }) => <Input {...field} label="Email" />}
             name="email"
             control={control}
@@ -64,8 +51,7 @@ export const LoginPage = () => {
             defaultValue=""
           />
           <Flex flexDirection="column" alignItems="flex-start" width="100%" gap="medium">
-            <PrimaryButton type="submit">Login</PrimaryButton>
-            <PrimaryButton onClick={onGoogleLogin}>Login with Google</PrimaryButton>
+            <PrimaryButton type="submit">Register</PrimaryButton>
           </Flex>
         </Flex>
       </Card>

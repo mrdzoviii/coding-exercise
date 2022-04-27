@@ -6,17 +6,20 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { StoreProvider } from './store';
 import { CssBaseline, theme } from './styled';
+import { AuthContextProvider } from './auth';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
   <React.StrictMode>
     <StoreProvider>
-      <BrowserRouter>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <App />
-        </ThemeProvider>
-      </BrowserRouter>
+      <AuthContextProvider>
+        <BrowserRouter>
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <App />
+          </ThemeProvider>
+        </BrowserRouter>
+      </AuthContextProvider>
     </StoreProvider>
   </React.StrictMode>
 );

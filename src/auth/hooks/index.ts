@@ -1,17 +1,23 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { useAppDispatch, useSetUser } from '../../store';
 import {
-  db,
   auth,
+  User,
   signInWithPopup,
   signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
   googleProvider,
-  query,
-  collection,
-  getDocs,
+  db,
   addDoc,
-  where
-} from '../../config/firebase';
+  collection,
+  decodeFirebaseJwt
+} from '../firebase';
+
+export interface IAuthFirebaseHook {
+  user?: User | null;
+  loading: boolean;
+}
 
 export interface ILogInWithEmailAndPasswordHook {
   login: (email: string, password: string) => Promise<void>;
@@ -21,30 +27,54 @@ export interface ILogInWithGoogleHook {
   loginWithGoogle: () => Promise<void>;
 }
 
+export interface IRegisterHook {
+  register: (name: string, email: string, password: string) => Promise<void>;
+}
+
+export const useAuthFirebase = (): IAuthFirebaseHook => {
+  const dispatch = useAppDispatch();
+  const dispatchSetUser = useSetUser(dispatch);
+  const [user, loading, error] = useAuthState(auth);
+  useEffect(() => {
+    if (user) {
+      user.getIdToken().then((jwt: string) => {
+        const {
+          email,
+          firebase: { sign_in_provider: provider },
+          name,
+          user_id: userId
+        } = decodeFirebaseJwt(jwt);
+        dispatchSetUser({ email, provider, name, userId });
+      });
+    }
+    if (error) {
+      dispatchSetUser(null);
+    }
+  }, [user, error, dispatchSetUser, loading]);
+
+  return { user, loading };
+};
+
 export const useLogInWithGoogle = (): ILogInWithGoogleHook => {
   const dispatch = useAppDispatch();
   const dispatchSetUser = useSetUser(dispatch);
-
   const loginWithGoogle = useCallback(async () => {
     try {
       const res = await signInWithPopup(auth, googleProvider);
-      console.log(res);
       const { user } = res;
-      const q = query(collection(db, 'users'), where('uid', '==', user.uid));
-      const docs = await getDocs(q);
-      if (docs.docs.length === 0) {
-        await addDoc(collection(db, 'users'), {
-          uid: user.uid,
-          name: user.displayName,
-          authProvider: 'google',
-          email: user.email
-        });
-      }
+      const jwt = await user.getIdToken();
+      const {
+        email,
+        firebase: { sign_in_provider: provider },
+        name,
+        user_id: userId
+      } = decodeFirebaseJwt(jwt);
+      dispatchSetUser({ email, provider, name, userId });
     } catch (err) {
-      const signInError = err as unknown as { message: string };
-      console.log(signInError.message);
+      const signInGoogleError = err as unknown as { message: string };
+      console.log(signInGoogleError.message);
     }
-  }, []);
+  }, [dispatchSetUser]);
 
   return { loginWithGoogle };
 };
@@ -53,22 +83,45 @@ export const useLogInWithEmailAndPassword = (): ILogInWithEmailAndPasswordHook =
   const dispatch = useAppDispatch();
   const dispatchSetUser = useSetUser(dispatch);
 
-  const login = useCallback(async (email: string, password: string) => {
+  const login = useCallback(
+    async (email: string, password: string) => {
+      try {
+        const res = await signInWithEmailAndPassword(auth, email, password);
+        const { user } = res;
+        const jwt = await user.getIdToken();
+        const {
+          firebase: { sign_in_provider: provider },
+          name,
+          user_id: userId
+        } = decodeFirebaseJwt(jwt);
+        dispatchSetUser({ email, provider, name, userId });
+      } catch (err) {
+        const signInError = err as unknown as { message: string };
+        console.log(signInError.message);
+      }
+    },
+    [dispatchSetUser]
+  );
+
+  return { login };
+};
+
+export const useRegister = (): IRegisterHook => {
+  const register = useCallback(async (name: string, email: string, password: string) => {
     try {
-      const res = await signInWithEmailAndPassword(auth, email, password);
+      const res = await createUserWithEmailAndPassword(auth, email, password);
       const { user } = res;
-      console.log(user);
       await addDoc(collection(db, 'users'), {
         uid: user.uid,
-        name: user.displayName,
+        name,
         authProvider: 'local',
         email
       });
     } catch (err) {
-      const signInError = err as unknown as { message: string };
-      console.log(signInError.message);
+      const registerError = err as unknown as { message: string };
+      console.log(registerError.message);
     }
   }, []);
 
-  return { login };
+  return { register };
 };

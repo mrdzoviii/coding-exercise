@@ -4,7 +4,7 @@ import { AppDispatch } from './root';
 
 export const useSetUser = (dispatch: AppDispatch) => {
   return useCallback(
-    (user: User) => {
+    (user: User | null) => {
       dispatch(setUser(user));
     },
     [dispatch]
