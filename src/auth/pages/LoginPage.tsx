@@ -1,6 +1,6 @@
-import { Flex, HeadingPrimary, Input, PrimaryButton, Card } from 'styled';
 import { useForm, Controller } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router';
+import { Flex, HeadingPrimary, Input, PrimaryButton, SecondaryButton, Card } from 'styled';
 import { PathRoutes } from '../../config';
 import { useLogInWithEmailAndPassword, useLogInWithGoogle } from '../hooks';
 
@@ -38,6 +38,10 @@ export const LoginPage = () => {
     navigate(from, { replace: true });
   };
 
+  const onRegister = () => {
+    navigate(PathRoutes.REGISTER, { replace: true, state: { from: location } });
+  };
+
   return (
     <Flex backgroundColor="primaryLight" flex="1" alignItems="center" justifyContent="center">
       <Card boxShadow="card" flexDirection="column" backgroundColor="secondary">
@@ -66,6 +70,7 @@ export const LoginPage = () => {
           <Flex flexDirection="column" alignItems="flex-start" width="100%" gap="medium">
             <PrimaryButton type="submit">Login</PrimaryButton>
             <PrimaryButton onClick={onGoogleLogin}>Login with Google</PrimaryButton>
+            <SecondaryButton onClick={onRegister}>Register</SecondaryButton>
           </Flex>
         </Flex>
       </Card>

@@ -5,3 +5,4 @@ export * from './layout';
 export * from './inputs';
 export * from './buttons';
 export * from './surfaces';
+export * from './notifications';

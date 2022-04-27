@@ -5,8 +5,10 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { StoreProvider } from './store';
-import { CssBaseline, theme } from './styled';
+import { CssBaseline, NotificationContainer, theme } from './styled';
 import { AuthContextProvider } from './auth';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
@@ -17,6 +19,7 @@ root.render(
           <ThemeProvider theme={theme}>
             <CssBaseline />
             <App />
+            <NotificationContainer autoClose={2000} newestOnTop position="top-right" />
           </ThemeProvider>
         </BrowserRouter>
       </AuthContextProvider>

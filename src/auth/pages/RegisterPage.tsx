@@ -1,6 +1,8 @@
 import { Flex, HeadingPrimary, Input, PrimaryButton, Card } from 'styled';
 import { useForm, Controller } from 'react-hook-form';
+import { useLocation, useNavigate } from 'react-router';
 import { useRegister } from '../hooks';
+import { PathRoutes } from '../../config';
 
 export interface IRegisterForm {
   name: string;
@@ -8,21 +10,33 @@ export interface IRegisterForm {
   password: string;
 }
 
-export const RegisterPage = () => {
-  const { register } = useRegister();
+interface ILocationState {
+  from: {
+    pathname: string;
+  };
+}
 
+export const RegisterPage = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const locationState = location as unknown as ILocationState;
+
+  const from = PathRoutes.ROOT || locationState?.from?.pathname;
+
+  const { register } = useRegister();
   const { control, handleSubmit } = useForm<IRegisterForm>();
 
   const onSubmit = async (data: IRegisterForm) => {
     if (data.email && data.password && data.name) {
       await register(data.name, data.email, data.password);
+      navigate(from, { replace: true });
     }
   };
 
   return (
     <Flex backgroundColor="primaryLight" flex="1" alignItems="center" justifyContent="center">
       <Card boxShadow="card" flexDirection="column" backgroundColor="secondary">
-        <HeadingPrimary>Sign In</HeadingPrimary>
+        <HeadingPrimary>Sign Up</HeadingPrimary>
         <Flex
           width="100%"
           as="form"

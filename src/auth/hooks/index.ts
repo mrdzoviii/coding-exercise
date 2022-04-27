@@ -1,5 +1,6 @@
 import { useCallback, useEffect } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import { toast } from 'react-toastify';
 import { useAppDispatch, useSetUser } from '../../store';
 import {
   auth,
@@ -71,8 +72,8 @@ export const useLogInWithGoogle = (): ILogInWithGoogleHook => {
       } = decodeFirebaseJwt(jwt);
       dispatchSetUser({ email, provider, name, userId });
     } catch (err) {
-      const signInGoogleError = err as unknown as { message: string };
-      console.log(signInGoogleError.message);
+      const error = err as unknown as { message: string };
+      toast.error(error.message);
     }
   }, [dispatchSetUser]);
 
@@ -96,8 +97,8 @@ export const useLogInWithEmailAndPassword = (): ILogInWithEmailAndPasswordHook =
         } = decodeFirebaseJwt(jwt);
         dispatchSetUser({ email, provider, name, userId });
       } catch (err) {
-        const signInError = err as unknown as { message: string };
-        console.log(signInError.message);
+        const error = err as unknown as { message: string };
+        toast.error(error.message);
       }
     },
     [dispatchSetUser]
@@ -118,8 +119,8 @@ export const useRegister = (): IRegisterHook => {
         email
       });
     } catch (err) {
-      const registerError = err as unknown as { message: string };
-      console.log(registerError.message);
+      const error = err as unknown as { message: string };
+      toast.error(error.message);
     }
   }, []);
 

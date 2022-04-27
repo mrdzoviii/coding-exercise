@@ -1,7 +1,4 @@
-import { User } from 'firebase/auth';
 import { Context, createContext, FC, ReactElement, useContext, useMemo } from 'react';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth } from '../firebase';
 import { useAuthFirebase } from '../hooks';
 
 export interface IAuthContext {
