@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Flex, Box, HeadingSecondary, HeadingTertiary } from '../../styled';
+import { Flex, Box } from '../../styled';
 import { useRootStateSelector } from '../../store';
 
 export interface IHeaderProps {
@@ -16,6 +16,8 @@ export const Header: FC<IHeaderProps> = ({ title }) => {
       width="100%"
       alignItems="center"
       justifyContent="space-between"
+      height="7rem"
+      padding="medium"
     >
       <Box>{title}</Box>
       <Box>
