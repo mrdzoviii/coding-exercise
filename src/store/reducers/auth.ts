@@ -17,7 +17,10 @@ const slice = createSlice({
   } as AuthState,
   reducers: {
     setUser: (state: AuthState, action: PayloadAction<User>) => {
-      state.user = action.payload;
+      if (action.payload.username && action.payload.fullName) {
+        state.user = action.payload;
+        state.isAuthorized = true;
+      }
     }
   }
 });
