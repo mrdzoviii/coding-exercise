@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import styled from 'styled-components';
-import { Flex, Box } from '../../styled';
-import { useRootStateSelector } from '../../store';
+import { Flex, Box } from '../../../styled';
+import { useRootStateSelector } from '../../../store';
 
 export interface IHeaderProps {
   title: string;

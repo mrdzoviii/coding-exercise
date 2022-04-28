@@ -1,3 +1,3 @@
-import { Flex } from '../../styled';
+import { PageLayout } from '../../layout';
 
-export const DashboardPage = () => <Flex>Dashboard page</Flex>;
+export const DashboardPage = () => <PageLayout title="Secret dashboard">Dashboard page</PageLayout>;

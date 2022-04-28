@@ -1,14 +1,14 @@
 import { FC } from 'react';
 import { Outlet } from 'react-router';
 import { Flex } from '../../styled';
-import { Header } from '../header/Header';
-import { Navigation } from '../navigation/Navigation.';
+import { Header } from './header/Header';
+import { Navigation } from './navigation/Navigation.';
 
-export interface ILayoutProps {
+export interface IAppLayoutProps {
   title: string;
 }
 
-export const Layout: FC<ILayoutProps> = ({ title }) => {
+export const AppLayout: FC<IAppLayoutProps> = ({ title }) => {
   return (
     <Flex
       backgroundColor="secondary"
@@ -21,14 +21,7 @@ export const Layout: FC<ILayoutProps> = ({ title }) => {
       <Header title={title} />
       <Flex flex="1" width="100%">
         <Navigation />
-        <Flex
-          flex="1"
-          flexDirection="column"
-          height="100%"
-          backgroundColor="primary"
-          boxShadow="card"
-          marginRight="large"
-        >
+        <Flex flex="1" flexDirection="column" height="100%" boxShadow="card" marginRight="large" borderRadiusTop="2rem">
           <Outlet />
         </Flex>
       </Flex>

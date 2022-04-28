@@ -31,6 +31,7 @@ export interface FlexProps {
   height?: string;
   boxShadow?: keyof DefaultTheme['shadow'];
   marginRight?: keyof DefaultTheme['spacing'];
+  borderRadiusTop?: string;
 }
 
 export const Flex = styled.div<FlexProps>`
@@ -41,9 +42,12 @@ export const Flex = styled.div<FlexProps>`
   flex: ${(props) => props.flex};
   width: ${(props) => props.width};
   height: ${(props) => props.height};
+  border-top-left-radius: ${(props) => props.borderRadiusTop};
+  border-top-right-radius: ${(props) => props.borderRadiusTop};
   gap: ${(props) => (props.gap ? props.theme.spacing[props.gap] : null)};
   padding: ${(props) => (props.padding ? props.theme.spacing[props.padding] : null)};
   margin-right: ${(props) => (props.marginRight ? props.theme.spacing[props.marginRight] : null)};
   background-color: ${(props) => (props.backgroundColor ? props.theme.colors[props.backgroundColor] : null)};
   box-shadow: ${(props) => (props.boxShadow ? props.theme.shadow[props.boxShadow] : null)};
+  overflow: hidden;
 `;

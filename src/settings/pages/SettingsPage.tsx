@@ -1,3 +1,3 @@
-import { Flex } from '../../styled';
+import { PageLayout } from '../../layout';
 
-export const SettingsPage = () => <Flex>Settings page</Flex>;
+export const SettingsPage = () => <PageLayout title="Settings">Settings page</PageLayout>;

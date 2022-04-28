@@ -1,5 +1,5 @@
-import { Flex, NavigationItem } from '../../styled';
-import { PathRoutes } from '../../config';
+import { Flex, NavigationItem } from '../../../styled';
+import { PathRoutes } from '../../../config';
 
 export const Navigation = () => {
   return (
