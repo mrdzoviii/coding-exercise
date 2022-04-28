@@ -29,6 +29,8 @@ export interface FlexProps {
   padding?: keyof DefaultTheme['spacing'];
   width?: string;
   height?: string;
+  boxShadow?: keyof DefaultTheme['shadow'];
+  marginRight?: keyof DefaultTheme['spacing'];
 }
 
 export const Flex = styled.div<FlexProps>`
@@ -41,5 +43,7 @@ export const Flex = styled.div<FlexProps>`
   height: ${(props) => props.height};
   gap: ${(props) => (props.gap ? props.theme.spacing[props.gap] : null)};
   padding: ${(props) => (props.padding ? props.theme.spacing[props.padding] : null)};
+  margin-right: ${(props) => (props.marginRight ? props.theme.spacing[props.marginRight] : null)};
   background-color: ${(props) => (props.backgroundColor ? props.theme.colors[props.backgroundColor] : null)};
+  box-shadow: ${(props) => (props.boxShadow ? props.theme.shadow[props.boxShadow] : null)};
 `;

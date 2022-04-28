@@ -2,6 +2,7 @@ import { FC } from 'react';
 import { Outlet } from 'react-router';
 import { Flex } from '../../styled';
 import { Header } from '../header/Header';
+import { Navigation } from '../navigation/Navigation.';
 
 export interface ILayoutProps {
   title: string;
@@ -19,10 +20,15 @@ export const Layout: FC<ILayoutProps> = ({ title }) => {
     >
       <Header title={title} />
       <Flex flex="1" width="100%">
-        <Flex width="25rem" flexDirection="column" height="100%">
-          Navigation
-        </Flex>
-        <Flex flex="1" flexDirection="column" height="100%" backgroundColor="primary">
+        <Navigation />
+        <Flex
+          flex="1"
+          flexDirection="column"
+          height="100%"
+          backgroundColor="primary"
+          boxShadow="card"
+          marginRight="large"
+        >
           <Outlet />
         </Flex>
       </Flex>
