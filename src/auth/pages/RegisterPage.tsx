@@ -1,8 +1,12 @@
 import { useForm, Controller } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router';
+import { object, string } from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { toast } from 'react-toastify';
 import { Flex, HeadingPrimary, Input, PrimaryButton, Card } from '../../styled';
 import { useRegister } from '../hooks';
 import { PathRoutes } from '../../config';
+import { ILogInForm } from './LoginPage';
 
 export interface IRegisterForm {
   name: string;
@@ -16,6 +20,19 @@ interface ILocationState {
   };
 }
 
+const registerFormSchema = object({
+  name: string().required('Name is required').max(50, 'Maximum length exceeded.').min(7, 'Minimum email length is 7'),
+  email: string()
+    .required('Email is required')
+    .max(50, 'Maximum length exceeded.')
+    .min(7, 'Minimum email length is 7')
+    .email('Email not valid'),
+  password: string()
+    .required('Password is required')
+    .min(7, 'Password minimum length is 8 characters.')
+    .max(50, 'Password minimum length is 8 characters.')
+});
+
 export const RegisterPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -24,12 +41,19 @@ export const RegisterPage = () => {
   const from = PathRoutes.ROOT || locationState?.from?.pathname;
 
   const { register } = useRegister();
-  const { control, handleSubmit } = useForm<IRegisterForm>();
+  const { control, handleSubmit, reset } = useForm<IRegisterForm>({
+    mode: 'onSubmit',
+    resolver: yupResolver(registerFormSchema)
+  });
 
   const onSubmit = async (data: IRegisterForm) => {
-    if (data.email && data.password && data.name) {
+    try {
       await register(data.name, data.email, data.password);
       navigate(from, { replace: true });
+      toast.success('Registration successful.');
+    } catch (err) {
+      reset();
+      toast.error('Registration failed.');
     }
   };
 
@@ -47,19 +71,44 @@ export const RegisterPage = () => {
           onSubmit={handleSubmit(onSubmit)}
         >
           <Controller
-            render={({ field }) => <Input {...field} label="Name" />}
+            render={({ field, fieldState: { error } }) => (
+              <Input
+                {...field}
+                error={!!error}
+                helperText={error?.message}
+                inputProps={{ maxLength: 50 }}
+                label="Name"
+              />
+            )}
             name="name"
             control={control}
             defaultValue=""
           />
           <Controller
-            render={({ field }) => <Input {...field} label="Email" />}
+            render={({ field, fieldState: { error } }) => (
+              <Input
+                {...field}
+                error={!!error}
+                helperText={error?.message}
+                inputProps={{ maxLength: 50 }}
+                label="Email"
+              />
+            )}
             name="email"
             control={control}
             defaultValue=""
           />
           <Controller
-            render={({ field }) => <Input {...field} label="Password" type="password" />}
+            render={({ field, fieldState: { error } }) => (
+              <Input
+                {...field}
+                error={!!error}
+                helperText={error?.message}
+                inputProps={{ maxLength: 50 }}
+                label="Password"
+                type="password"
+              />
+            )}
             name="password"
             control={control}
             defaultValue=""

@@ -45,14 +45,12 @@ export const LoginPage = () => {
   });
 
   const onSubmit = async (data: ILogInForm) => {
-    if (data.email && data.password) {
-      try {
-        await login(data.email, data.password);
-        navigate(from, { replace: true });
-      } catch (err) {
-        reset();
-        toast.error('Wrong email/password');
-      }
+    try {
+      await login(data.email, data.password);
+      navigate(from, { replace: true });
+    } catch (err) {
+      reset();
+      toast.error('Wrong email/password');
     }
   };
 

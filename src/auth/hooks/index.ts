@@ -135,8 +135,7 @@ export const useRegister = (): IRegisterHook => {
         email
       });
     } catch (err) {
-      const error = err as unknown as { message: string };
-      toast.error(error.message);
+      throw err;
     }
   }, []);
 
