@@ -12,7 +12,9 @@ export const PageLayout: FC<IPageLayoutProps> = ({ title, children }) => {
       <Flex height="10rem" justifyContent="flex-start" alignItems="center" backgroundColor="primary" width="100%">
         <HeadingSecondary>{title}</HeadingSecondary>
       </Flex>
-      <Flex flex="1">{children}</Flex>
+      <Flex flex="1" width="100%">
+        {children}
+      </Flex>
     </Flex>
   );
 };
