@@ -1,5 +1,8 @@
 import { useForm, Controller } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router';
+import { string, object } from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { toast } from 'react-toastify';
 import { Flex, HeadingPrimary, Input, PrimaryButton, SecondaryButton, Card } from '../../styled';
 import { PathRoutes } from '../../config';
 import { useLogInWithEmailAndPassword, useLogInWithGoogle } from '../hooks';
@@ -15,6 +18,18 @@ interface ILocationState {
   };
 }
 
+const loginFormSchema = object({
+  email: string()
+    .required('Email is required')
+    .max(50, 'Maximum length exceeded.')
+    .min(7, 'Minimum email length is 7')
+    .email('Email not valid'),
+  password: string()
+    .required('Password is required')
+    .min(7, 'Password minimum length is 8 characters.')
+    .max(50, 'Password minimum length is 8 characters.')
+});
+
 export const LoginPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -24,18 +39,32 @@ export const LoginPage = () => {
 
   const from = PathRoutes.ROOT || locationState?.from?.pathname;
 
-  const { control, handleSubmit } = useForm<ILogInForm>();
+  const { control, handleSubmit } = useForm<ILogInForm>({
+    mode: 'onSubmit',
+    reValidateMode: 'onChange',
+    criteriaMode: 'all',
+    shouldFocusError: true,
+    resolver: yupResolver(loginFormSchema)
+  });
 
   const onSubmit = async (data: ILogInForm) => {
     if (data.email && data.password) {
-      await login(data.email, data.password);
-      navigate(from, { replace: true });
+      try {
+        await login(data.email, data.password);
+        navigate(from, { replace: true });
+      } catch (err) {
+        toast.error('Wrong email/password');
+      }
     }
   };
 
   const onGoogleLogin = async () => {
-    await loginWithGoogle();
-    navigate(from, { replace: true });
+    try {
+      await loginWithGoogle();
+      navigate(from, { replace: true });
+    } catch (err) {
+      toast.error('Login via Google failed');
+    }
   };
 
   const onRegister = () => {
@@ -56,13 +85,17 @@ export const LoginPage = () => {
           onSubmit={handleSubmit(onSubmit)}
         >
           <Controller
-            render={({ field }) => <Input {...field} label="Email" />}
+            render={({ field, fieldState: { error } }) => (
+              <Input error={!!error} helperText={error?.message} {...field} label="Email" />
+            )}
             name="email"
             control={control}
             defaultValue=""
           />
           <Controller
-            render={({ field }) => <Input {...field} label="Password" type="password" />}
+            render={({ field, fieldState: { error } }) => (
+              <Input error={!!error} helperText={error?.message} {...field} label="Password" type="password" />
+            )}
             name="password"
             control={control}
             defaultValue=""

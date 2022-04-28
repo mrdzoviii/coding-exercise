@@ -7,5 +7,8 @@ export const Input = styled(TextField).attrs(() => ({ autoComplete: 'off', varia
     .MuiInputBase-root {
       font-size: ${(props) => props.theme.fontSize.medium};
     }
+    .MuiFormHelperText-root {
+      font-size: ${(props) => props.theme.fontSize.small};
+    }
   }
 `;

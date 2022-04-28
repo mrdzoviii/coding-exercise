@@ -90,8 +90,7 @@ export const useLogInWithGoogle = (): ILogInWithGoogleHook => {
       } = decodeFirebaseJwt(jwt);
       dispatchSetUser({ email, provider, name, userId });
     } catch (err) {
-      const error = err as unknown as { message: string };
-      toast.error(error.message);
+      throw err;
     }
   }, [dispatchSetUser]);
 
@@ -115,8 +114,7 @@ export const useLogInWithEmailAndPassword = (): ILogInWithEmailAndPasswordHook =
         } = decodeFirebaseJwt(jwt);
         dispatchSetUser({ email, provider, name, userId });
       } catch (err) {
-        const error = err as unknown as { message: string };
-        toast.error(error.message);
+        throw err;
       }
     },
     [dispatchSetUser]
