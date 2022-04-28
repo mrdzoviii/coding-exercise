@@ -13,6 +13,8 @@ export const CityWeather: FC<ICityWeather> = ({ city }) => {
   const { data, isLoading, error } = useGetCityWeather(city);
   if (isLoading) return <WeatherCard>...loading</WeatherCard>;
   if (error) return <WeatherCard>Ops something went wrong</WeatherCard>;
+  if (!data) return <WeatherCard>No data for {city}</WeatherCard>;
+
   return (
     <WeatherCard
       padding="medium"
@@ -22,7 +24,7 @@ export const CityWeather: FC<ICityWeather> = ({ city }) => {
       justifyContent="space-between"
       width="20rem"
     >
-      <h2>{data?.city}</h2> <h3>{Math.round(data?.temperature || 0)} &#x2103; </h3>
+      <h2>{data.city}</h2> <h3>{Math.round(data.temperature)} &#x2103; </h3>
     </WeatherCard>
   );
 };

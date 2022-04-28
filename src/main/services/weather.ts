@@ -2,11 +2,6 @@ import { useEffect, useState } from 'react';
 import { AxiosError } from 'axios';
 import { IWeatherData, IWeatherResponse, openWeatherApi } from '../../config';
 
-const mapResponseData = (data: IWeatherResponse): IWeatherData => ({
-  city: data.name,
-  temperature: data.main.temp
-});
-
 export interface IGetCityWeatherHook {
   data: IWeatherData | null;
   isLoading: boolean;
@@ -21,8 +16,8 @@ export const useGetCityWeather = (city: string): IGetCityWeatherHook => {
     (async () => {
       try {
         setLoading(true);
-        const response = await openWeatherApi.get(`/weather?q=${city}&units=metric`);
-        setData(response.status === 200 ? mapResponseData(response.data) : null);
+        const response = await openWeatherApi.get<IWeatherResponse>(`/weather?q=${city}&units=metric`);
+        setData(response.status === 200 ? { city: response.data.name, temperature: response.data.main.temp } : null);
       } catch (err) {
         const axiosErr = err as AxiosError;
         setError(axiosErr);
