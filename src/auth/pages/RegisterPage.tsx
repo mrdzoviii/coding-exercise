@@ -6,7 +6,6 @@ import { toast } from 'react-toastify';
 import { Flex, HeadingPrimary, Input, PrimaryButton, Card } from '../../styled';
 import { useRegister } from '../hooks';
 import { PathRoutes } from '../../config';
-import { ILogInForm } from './LoginPage';
 
 export interface IRegisterForm {
   name: string;
