@@ -39,11 +39,8 @@ export const LoginPage = () => {
 
   const from = PathRoutes.ROOT || locationState?.from?.pathname;
 
-  const { control, handleSubmit } = useForm<ILogInForm>({
+  const { control, handleSubmit, reset } = useForm<ILogInForm>({
     mode: 'onSubmit',
-    reValidateMode: 'onChange',
-    criteriaMode: 'all',
-    shouldFocusError: true,
     resolver: yupResolver(loginFormSchema)
   });
 
@@ -53,6 +50,7 @@ export const LoginPage = () => {
         await login(data.email, data.password);
         navigate(from, { replace: true });
       } catch (err) {
+        reset();
         toast.error('Wrong email/password');
       }
     }
@@ -86,7 +84,13 @@ export const LoginPage = () => {
         >
           <Controller
             render={({ field, fieldState: { error } }) => (
-              <Input error={!!error} helperText={error?.message} {...field} label="Email" />
+              <Input
+                {...field}
+                error={!!error}
+                helperText={error?.message}
+                inputProps={{ maxLength: 50 }}
+                label="Email"
+              />
             )}
             name="email"
             control={control}
@@ -94,7 +98,14 @@ export const LoginPage = () => {
           />
           <Controller
             render={({ field, fieldState: { error } }) => (
-              <Input error={!!error} helperText={error?.message} {...field} label="Password" type="password" />
+              <Input
+                {...field}
+                error={!!error}
+                helperText={error?.message}
+                inputProps={{ maxLength: 50 }}
+                label="Password"
+                type="password"
+              />
             )}
             name="password"
             control={control}
