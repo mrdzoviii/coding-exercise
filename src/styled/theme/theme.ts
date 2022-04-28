@@ -30,7 +30,7 @@ export const theme: DefaultTheme = {
     primary: '#fce094',
     primaryLight: '#fff8e5',
     secondary: '#fff',
-    text: '#686b6b',
-    textSecondary: '#dedfdf'
+    textSecondary: '#686b6b',
+    text: '#454746'
   }
 };

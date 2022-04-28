@@ -1,9 +1,8 @@
 import { Navigate, Route, Routes } from 'react-router';
 import { RequireAuth, LoginPage, RegisterPage } from './auth';
 import { PathRoutes } from './config';
-import { DashboardPage } from './dashboard';
 import { AppLayout } from './layout';
-import { SettingsPage } from './settings';
+import { DashboardPage, SettingsPage } from './main';
 
 function App() {
   return (

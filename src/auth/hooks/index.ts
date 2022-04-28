@@ -12,7 +12,8 @@ import {
   db,
   addDoc,
   collection,
-  decodeFirebaseJwt
+  decodeFirebaseJwt,
+  signOut
 } from '../firebase';
 
 export interface IAuthFirebaseHook {
@@ -31,6 +32,23 @@ export interface ILogInWithGoogleHook {
 export interface IRegisterHook {
   register: (name: string, email: string, password: string) => Promise<void>;
 }
+
+export interface ILogOutHook {
+  logout: () => Promise<void>;
+}
+
+export const useLogout = (): ILogOutHook => {
+  const logout = useCallback(async () => {
+    try {
+      await signOut(auth);
+    } catch (err) {
+      const error = err as unknown as { message: string };
+      toast.error(error.message);
+    }
+  }, []);
+
+  return { logout };
+};
 
 export const useAuthFirebase = (): IAuthFirebaseHook => {
   const dispatch = useAppDispatch();
