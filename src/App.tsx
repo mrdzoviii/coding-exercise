@@ -8,28 +8,14 @@ function App() {
   return (
     <Routes>
       <Route path={PathRoutes.ROOT} element={<Navigate to={PathRoutes.DASHBOARD} />} />
-      <Route element={<AppLayout title="Dashboard" />}>
-        <Route
-          path={PathRoutes.DASHBOARD}
-          element={
-            <RequireAuth>
-              <DashboardPage />
-            </RequireAuth>
-          }
-        />
+      <Route element={<RequireAuth />}>
+        <Route element={<AppLayout title="settings" />}>
+          <Route path={PathRoutes.SETTINGS} element={<SettingsPage />} />
+        </Route>
+        <Route element={<AppLayout title="dashboard" />}>
+          <Route path={PathRoutes.DASHBOARD} element={<DashboardPage />} />
+        </Route>
       </Route>
-
-      <Route element={<AppLayout title="Settings" />}>
-        <Route
-          path={PathRoutes.SETTINGS}
-          element={
-            <RequireAuth>
-              <SettingsPage />
-            </RequireAuth>
-          }
-        />
-      </Route>
-
       <Route path={PathRoutes.LOGIN} element={<LoginPage />} />
       <Route path={PathRoutes.REGISTER} element={<RegisterPage />} />
       <Route path="*" element={<NotFoundPage />} />
