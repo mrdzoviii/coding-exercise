@@ -1,3 +1,3 @@
-export * from './SettingsPage';
-export * from './DashboardPage';
-export * from './NotFoundPage';
+export * from './settings';
+export * from './dashboard';
+export * from './not-found';

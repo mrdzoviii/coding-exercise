@@ -2,7 +2,7 @@ import { Navigate, Route, Routes } from 'react-router';
 import { RequireAuth, LoginPage, RegisterPage } from './auth';
 import { PathRoutes } from './config';
 import { AppLayout } from './layout';
-import { DashboardPage, NotFoundPage, SettingsPage } from './main';
+import { DashboardPage, SettingsPage, NotFoundPage } from './main';
 
 function App() {
   return (

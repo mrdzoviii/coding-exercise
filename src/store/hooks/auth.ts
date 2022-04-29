@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
-import { setUser, User } from '../reducers';
-import { AppDispatch } from './root';
+import { setUser } from '../reducers';
+import { User } from '../types';
+import { AppDispatch } from '../store';
 
 export const useSetUser = (dispatch: AppDispatch) => {
   return useCallback(

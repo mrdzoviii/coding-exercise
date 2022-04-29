@@ -1,2 +1,2 @@
-export * from './routes';
-export * from './open-weather-api';
+export * from './types';
+export * from './api';

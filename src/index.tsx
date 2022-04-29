@@ -6,7 +6,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { StoreProvider } from './store';
 import { CssBaseline, NotificationContainer, theme } from './styled';
-import { AuthContextProvider } from './auth';
+import { AuthProvider } from './auth';
 
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -14,7 +14,7 @@ const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
   <React.StrictMode>
     <StoreProvider>
-      <AuthContextProvider>
+      <AuthProvider>
         <BrowserRouter>
           <ThemeProvider theme={theme}>
             <CssBaseline />
@@ -22,7 +22,7 @@ root.render(
             <NotificationContainer autoClose={2000} newestOnTop position="top-right" />
           </ThemeProvider>
         </BrowserRouter>
-      </AuthContextProvider>
+      </AuthProvider>
     </StoreProvider>
   </React.StrictMode>
 );

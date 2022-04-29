@@ -1,16 +1,8 @@
-import styled, { DefaultTheme } from 'styled-components';
+import styled from 'styled-components';
 import { Flex } from '../layout';
+import { ICardProps } from '../types';
 
-export interface CardProps {
-  gap?: keyof DefaultTheme['spacing'];
-  backgroundColor?: keyof DefaultTheme['colors'];
-  padding?: keyof DefaultTheme['spacing'];
-  height?: string;
-  minWidth?: string;
-  boxShadow?: keyof DefaultTheme['shadow'];
-}
-
-export const Card = styled(Flex)<CardProps>`
+export const Card = styled(Flex)<ICardProps>`
   display: flex;
   flex-direction: column;
   min-width: ${(props) => (!props.minWidth ? '50rem' : props.minWidth)};

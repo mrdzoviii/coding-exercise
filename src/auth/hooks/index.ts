@@ -4,7 +4,6 @@ import { toast } from 'react-toastify';
 import { useAppDispatch, useSetUser } from '../../store';
 import {
   auth,
-  User,
   signInWithPopup,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
@@ -15,27 +14,13 @@ import {
   decodeFirebaseJwt,
   signOut
 } from '../firebase';
-
-export interface IAuthFirebaseHook {
-  user?: User | null;
-  loading: boolean;
-}
-
-export interface ILogInWithEmailAndPasswordHook {
-  login: (email: string, password: string) => Promise<void>;
-}
-
-export interface ILogInWithGoogleHook {
-  loginWithGoogle: () => Promise<void>;
-}
-
-export interface IRegisterHook {
-  register: (name: string, email: string, password: string) => Promise<void>;
-}
-
-export interface ILogOutHook {
-  logout: () => Promise<void>;
-}
+import {
+  IAuthFirebaseHook,
+  ILogInWithEmailAndPasswordHook,
+  ILogInWithGoogleHook,
+  ILogOutHook,
+  IRegisterHook
+} from '../types';
 
 export const useLogout = (): ILogOutHook => {
   const logout = useCallback(async () => {

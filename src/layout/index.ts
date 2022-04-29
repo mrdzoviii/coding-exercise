@@ -1,2 +1,3 @@
-export * from './app/AppLayout';
-export * from './page/PageLayout';
+export { AppLayout } from './app';
+export { PageLayout } from './page';
+export * from './types';
